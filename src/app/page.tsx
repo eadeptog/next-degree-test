@@ -3,7 +3,9 @@ import {useUser} from "@auth0/nextjs-auth0/client";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import * as React from "react";
-
+import {ApolloProvider, gql, useQuery} from "@apollo/client";
+import createApolloClient from "@/app/graphql/apollo-client";
+import StarWarsList from "@/app/components/star-wars/star-wars-list";
 export default function Home() {
     const { user, error, isLoading } = useUser();
     if(isLoading){
@@ -14,9 +16,14 @@ export default function Home() {
         )
     }
     if(user){
+        const client = createApolloClient()
         return (
             <main>
-                {user.name}
+                <>
+                    <ApolloProvider client={client}>
+                        <StarWarsList></StarWarsList>
+                    </ApolloProvider>
+                </>
             </main>
         )
     }

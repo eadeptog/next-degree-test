@@ -1,4 +1,4 @@
-import {graphql} from "@/gql";
+import {graphql} from "../../gql/index";
 
 export const allFilmsWithVariablesQueryDocument = graphql(/* GraphQL */ `
     query GetFilmsWithCharactersAndDirectors($first: Int, $after: String) {

@@ -5,6 +5,11 @@ import * as React from "react";
 
 export default function Login(){
     const { user, error, isLoading } = useUser();
+    if(error){
+        return(<>
+            Error loading user
+        </>)
+    }
     if(isLoading){
         return(<>
             Loading...

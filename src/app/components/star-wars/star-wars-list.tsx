@@ -2,18 +2,14 @@
 import {useQuery} from "@apollo/client";
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {Film} from "@/gql/graphql";
-import {graphql} from "@/gql";
+import {Film} from "../../../gql/graphql";
 import Button from "@mui/material/Button";
-import StarWarsShort, {TypeView} from "@/app/components/star-wars/star-wars-short";
-import {Drawer, SwipeableDrawer} from "@mui/material";
+import StarWarsShort, {TypeView} from "./star-wars-short";
+import {SwipeableDrawer} from "@mui/material";
 import Box from "@mui/material/Box";
-import {allFilmsWithVariablesQueryDocument} from "@/app/graphql/queries";
+import {allFilmsWithVariablesQueryDocument} from "../../graphql/queries";
 import Typography from "@mui/material/Typography";
-import StarWarsFilters from "@/app/components/star-wars/star-wars-filters";
-import {minWidth} from "@mui/system";
-import {filter} from "rxjs";
-
+import StarWarsFilters from "./star-wars-filters";
 export default function StarWarsList(){
     const [drawerOpened, setDrawerOpened] = useState(false)
     const [filtersOpened, setFiltersOpened] = useState(false)
@@ -141,7 +137,7 @@ export default function StarWarsList(){
                             }
                         })
                     }
-                }> Load more</Button>
+                }>Load more</Button>
             }
             { data?.allFilms?.pageInfo.endCursor === null &&
             <p className="text-center">No more Films available!</p>}

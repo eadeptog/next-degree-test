@@ -1,7 +1,7 @@
 'use client'
 import * as React from "react";
 import Button from "@mui/material/Button";
-import {Film} from "@/gql/graphql";
+import {Film} from "../../../gql/graphql";
 import {Card, CardActions, CardContent, CardMedia} from "@mui/material";
 import Typography from "@mui/material/Typography";
 export enum TypeView{

@@ -47,14 +47,16 @@ export default function StarWarsList(){
                         variables: { first: 1, after: data?.allFilms?.pageInfo.endCursor },
                         updateQuery: (prev, { fetchMoreResult }) => {
                             if (!fetchMoreResult) return prev;
+
+                            const films = [...prev.allFilms?.films as any, ...fetchMoreResult?.allFilms?.films as any]
                             return {
                                 allFilms:{
-                                    films: [...prev.allFilms?.films, ...fetchMoreResult.allFilms.films],
-                                    pageInfo: fetchMoreResult.allFilms.pageInfo,
+                                    films,
+                                    pageInfo: fetchMoreResult?.allFilms?.pageInfo,
                                     __typename: prev.allFilms?.__typename
                                 },
                                 __typename: prev.__typename
-                            }
+                            } as any
                         }
                     })
                 }

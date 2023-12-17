@@ -1,4 +1,5 @@
 'use client'
+import {useUser} from "@auth0/nextjs-auth0/client";
 import Button from "@mui/material/Button";
 import * as React from "react";
 import Typography from "@mui/material/Typography";
@@ -23,7 +24,7 @@ export default function LandingPage(){
                     <div className="flex flex-row">
                         <div className="basis-1/3"></div>
                         <div className="basis-1/3">
-                            <a href="/api/auth/login"><Button className="w-full" variant="outlined">Login</Button></a>
+                            <a href="/api/auth/login" data-testid="login-button"><Button className="w-full" variant="outlined">Login</Button></a>
                         </div>
                         <div className="basis-1/3"></div>
                     </div>

@@ -55,7 +55,7 @@ export default function Home() {
                   <div className="m-5 py-10 lg:p-0">
                       <img
                           sizes="(max-width: 1185px) 100vw, 1185px"
-                          srcset="
+                          srcSet="
                                 star-wars-poster_hxzaym_c_scale,w_200.jpg 200w,
                                 star-wars-poster_hxzaym_c_scale,w_348.jpg 348w,
                                 star-wars-poster_hxzaym_c_scale,w_428.jpg 428w,

@@ -6,15 +6,20 @@ import {Film} from "@/gql/graphql";
 import {graphql} from "@/gql";
 import Button from "@mui/material/Button";
 import StarWarsShort, {TypeView} from "@/app/components/star-wars/star-wars-short";
-import {SwipeableDrawer} from "@mui/material";
+import {Drawer, SwipeableDrawer} from "@mui/material";
 import Box from "@mui/material/Box";
 import {allFilmsWithVariablesQueryDocument} from "@/app/graphql/queries";
 import Typography from "@mui/material/Typography";
+import StarWarsFilters from "@/app/components/star-wars/star-wars-filters";
+import {minWidth} from "@mui/system";
+import {filter} from "rxjs";
 
 export default function StarWarsList(){
     const [drawerOpened, setDrawerOpened] = useState(false)
+    const [filtersOpened, setFiltersOpened] = useState(false)
+    const [filterCriteria, setFilterCriteria] = useState('')
     const [filmDisplayed, setFilmDisplayed] = useState<{film:Film, index:number;} | undefined>(undefined)
-    const { data, loading, error, fetchMore } = useQuery(allFilmsWithVariablesQueryDocument, { variables: { first: 3, after: null } })
+    const { data, error, fetchMore } = useQuery(allFilmsWithVariablesQueryDocument, { variables: { first: 3, after: null } })
     useEffect(
         ()=>{
             if(filmDisplayed){
@@ -26,16 +31,74 @@ export default function StarWarsList(){
     if(data){
         return (<>
 
-            <Typography className="m-2 lg:py-10" variant="h3" gutterBottom>
+            <Typography className="m-2" variant="h3" gutterBottom>
                 Star wars films
             </Typography>
-            <p>You can filter local films</p>
+
             <div className="grid lg:grid-cols-3 gap-3">
-                {data.allFilms?.films?.map(
-                    (film:Film | any, index)=>{
+                <div>
+                </div>
+                <div></div>
+                <div>
+                    <Button className="w-full m-5"
+                            variant="outlined"
+                            color="secondary"
+                            onClick={
+                                ()=>{
+                                    setFiltersOpened(true)
+                                }
+                            }>
+                        Filters
+                    </Button>
+                </div>
+            </div>
+
+            <SwipeableDrawer
+                anchor="right"
+                open={filtersOpened}
+                onClose={
+                    ()=>{
+                        setFiltersOpened(false)
+                    }
+                }
+                onOpen={
+                    ()=>{
+                    }
+                }
+
+            >
+                <div style={{minWidth: '320px'}}>
+                    <StarWarsFilters setDrawerOpened={setFiltersOpened} onSubmit={
+                        (data)=>{
+                            setFiltersOpened(false)
+                            setFilterCriteria(data.commonFilter.toLowerCase())
+                        }
+                    }/>
+                </div>
+            </SwipeableDrawer>
+
+            <div className="grid lg:grid-cols-3 gap-3">
+                {filterCriteria === '' && data.allFilms?.films?.map(
+                    (film:Film  | any, index)=>{
                         return <StarWarsShort setFilm={setFilmDisplayed} index={index + 1} key={film?.id} film={film}/>
                     }
                 )}
+                {filterCriteria !== '' && (data.allFilms?.films)?.filter(
+                    (film:Film | any)=>{
+                        console.log('no papi', filterCriteria)
+                        if(filterCriteria ===  ''){
+                            return true
+                        }else{
+                            console.log('buscando', filterCriteria)
+                            return film.director?.toLowerCase().indexOf(filterCriteria) > -1 || film.title?.toLowerCase().indexOf(filterCriteria) > -1
+                        }
+                    }
+                )
+                    .map(
+                        (film:Film | any, index)=>{
+                            return <StarWarsShort setFilm={setFilmDisplayed} index={index + 1} key={film?.id} film={film}/>
+                        }
+                    )}
             </div>
             <SwipeableDrawer
                 anchor={"bottom"}
@@ -49,6 +112,7 @@ export default function StarWarsList(){
                     ()=>{
                     }
                 }
+
 
             >
                 <Box

@@ -12,11 +12,7 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import Login from "@/app/components/home/login";
-import {Drawer} from "@mui/material";
 
 
 const inter = Inter({subsets: ['latin']})
@@ -31,22 +27,21 @@ export default function RootLayout({
                                    }: {
     children: React.ReactNode
 }) {
-
     return (
         <html lang="en">
         <body className={inter.className}>
         <UserProvider>
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-                <Toolbar>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        Star Wars
-                    </Typography>
-                    <Login/>
-                </Toolbar>
-            </AppBar>
-        </Box>
-            {children}
+                <Box sx={{ flexGrow: 1 }}>
+                    <AppBar position="static">
+                        <Toolbar>
+                            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                                Star Wars
+                            </Typography>
+                            <Login/>
+                        </Toolbar>
+                    </AppBar>
+                </Box>
+                {children}
         </UserProvider>
         </body>
         </html>

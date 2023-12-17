@@ -3,7 +3,9 @@ import {useUser} from "@auth0/nextjs-auth0/client";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import * as React from "react";
-
+import {ApolloProvider, gql, useQuery} from "@apollo/client";
+import createApolloClient from "@/app/graphql/apollo-client";
+import StarWarsList from "@/app/components/star-wars/star-wars-list";
 export default function Home() {
     const { user, error, isLoading } = useUser();
     if(isLoading){
@@ -14,9 +16,14 @@ export default function Home() {
         )
     }
     if(user){
+        const client = createApolloClient()
         return (
             <main>
-                {user.name}
+                <>
+                    <ApolloProvider client={client}>
+                        <StarWarsList></StarWarsList>
+                    </ApolloProvider>
+                </>
             </main>
         )
     }
@@ -48,7 +55,7 @@ export default function Home() {
                   <div className="m-5 py-10 lg:p-0">
                       <img
                           sizes="(max-width: 1185px) 100vw, 1185px"
-                          srcset="
+                          srcSet="
                                 star-wars-poster_hxzaym_c_scale,w_200.jpg 200w,
                                 star-wars-poster_hxzaym_c_scale,w_348.jpg 348w,
                                 star-wars-poster_hxzaym_c_scale,w_428.jpg 428w,
